@@ -13,7 +13,7 @@ def adding_contact(filename):
         fio = input("Введите ФИО: ")
         phone_number = input("Введите номер телефона: ")
         data.write(f"{num} | {fio} | {phone_number}\n")
-        print(f"Добавлена запись : {num} | {fio} | {phone_number}\n")
+        print(f"Добавлена запись: {num} | {fio} | {phone_number}\n")
 
 
 def edit_contact(filename):
@@ -55,6 +55,18 @@ def delete_contact(filename):
         data.write("\n".join(tel_book_lines))
 
 
+def copy_data(source_filename, destination_filename):
+    try:
+        with open(source_filename, "r", encoding="utf-8") as source_file:
+            data_to_copy = source_file.read()
+
+        with open(destination_filename, "a", encoding="utf-8") as destination_file:
+            destination_file.write(data_to_copy)
+            print(f"Data copied from {source_filename} to {destination_filename}")
+    except FileNotFoundError:
+        print("File not found. Please check the file name and try again.")
+
+
 def main():
     my_choice = -1
     file_tel = "phonebook.txt"
@@ -68,6 +80,7 @@ def main():
         print("2 - Добавление контакта")
         print("3 - Изменение контакта")
         print("4 - Удаление контакта")
+        print("5 - Копировать данные из файла")
         print("0 - Выход из программы")
         action = int(input("Действие: "))
         if action == 1:
@@ -78,6 +91,10 @@ def main():
             edit_contact(file_tel)
         elif action == 4:
             delete_contact(file_tel)
+        elif action == 5:
+            source_file = input("Введите имя файла, из которого хотите скопировать данные: ")
+            destination_file = input("Введите имя файла, в который хотите скопировать данные: ")
+            copy_data(source_file, destination_file)
         else:
             my_choice = 0
 
